@@ -1,6 +1,7 @@
 const carrinho = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
 const botao = document.querySelector('.empty-cart');
+const loading = document.querySelector('.loading');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -87,10 +88,6 @@ const clearCart = () => {
   });
 };
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
 const addItems = (items) => {
   items.forEach((item) => {
     const itemHTML = createProductItemElement(item);
@@ -103,6 +100,7 @@ const getProductPromise = async (product) => {
   try {
   const promise = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
   const data = await promise.json();
+  loading.remove();
   const result = data.results;
   addItems(result);
   console.log(result);
